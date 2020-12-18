@@ -27,7 +27,7 @@ const Greetings: React.FC = () => {
   }
 
   if (fileStatus === FILE_STATUS.LOADING) {
-    readFile('/Volumes/Work/CryptoData/1.cr1y', (status, res) => {
+    readFile('/Volumes/Work/CryptoData/1.cry', (status, res) => {
       if (status && res) {
         const prefix = res?.substring(0, 5)
         if (checkFileCorruption(prefix)) {
