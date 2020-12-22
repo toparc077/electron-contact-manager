@@ -1,6 +1,3 @@
-## Electron + TypeScript + React
-Boilerplate for a project using Electron, React and Typescript
-
 ## Installation
 
 Use a package manager of your choice (npm, yarn, etc.) in order to install all dependencies
@@ -12,6 +9,13 @@ npm install
 ```bash
 yarn install
 ```
+
+## Setting up ENV variable
+
+Copy `.env.sample` file and rename it to `.env`.
+In the env file you can see the `REACT_APP_FILE_PATH` and please put the file path for encrypted contact data.
+
+`Example: /Volumes/Work/1.cry`
 
 ## Usage
 In order to run this project 2 scripts will need to be executed `dev:react` and `dev:electron`, run each one in a different terminal and always run `dev:react` before `dev:electron`, or `dev` to run them in order automatically
@@ -35,13 +39,3 @@ To generate a project package run `package`
 ```bash
 npm run package
 ```
-
-
-
-## Contributing
-
-Pull requests are always welcome 😃.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
