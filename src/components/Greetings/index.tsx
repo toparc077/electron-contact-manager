@@ -62,7 +62,7 @@ const Greetings: React.FC = () => {
       setFileStatus(FILE_STATUS.INCORRECT_PASSWORD)
       return
     }
-    // setDecryptedJson(JSON.parse(decryptedMessage))
+
     const data = JSON.parse(decryptedMessage || '{}')
     if (data) {
       setDecryptedJson(data)
