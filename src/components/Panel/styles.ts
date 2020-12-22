@@ -26,6 +26,16 @@ export const Sidebar = styled.ul`
   overflow: auto;
 `
 
+export const SearchBar = styled.input`
+  width: 200px;
+  padding: 4px;
+  margin: 4px;
+  font-size: 16px;
+  border-radius: 4px;
+  outline: none;
+}
+`
+
 export const PanelMain = styled.div`
   position: relative;
   width: 400px;
