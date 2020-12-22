@@ -23,21 +23,16 @@ const Panel:FC<IPanelProps> = ({ data }) => {
               >{key}</Item>
             })
           }
-          {/* <Item>Contact 1</Item>
-          <Item active>Contact 2</Item>
-          <Item>Contact 3</Item>
-          <Item>Contact 4</Item>
-          <Item>Contact 5</Item> */}
         </Sidebar>
         <PanelMain>
           {activeKey !== '' &&
             <>
               <PanelContent>
-                <ContentTitle>Contact 1</ContentTitle>
-                <ContentItem>Phone: 079 999999</ContentItem>
-                <ContentItem>Email: abc@def.com</ContentItem>
+                <ContentTitle>{activeKey}</ContentTitle>
+                <ContentItem>Phone: {data[activeKey].phone}</ContentItem>
+                <ContentItem>Email: {data[activeKey].email}</ContentItem>
                 <br/>
-                <ContentItem>Address:<br/>ABC DEF 1,<br/>Hello World</ContentItem>
+                <ContentItem>Address: <br />{data[activeKey].address}</ContentItem>
               </PanelContent>
               <PanelActions>
                 <Button onClick={() => setModalOpened(true)}>Add</Button>
