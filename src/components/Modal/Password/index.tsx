@@ -11,13 +11,13 @@ import {
   TextInput
 } from './styles'
 
-interface IModal {
+interface IPasswordModalProps {
   description: string
-  open: boolean
+  open: boolean,
   onClose: (password: string) => void
 }
 
-const Modal: FC<IModal> = ({ description, open, onClose }) => {
+const PasswordModal: FC<IPasswordModalProps> = ({ description, open, onClose }) => {
   const [password, setPassword] = useState('')
   const handleOk = () => {
     console.log(password)
@@ -52,4 +52,4 @@ const Modal: FC<IModal> = ({ description, open, onClose }) => {
   )
 }
 
-export default Modal
+export default PasswordModal

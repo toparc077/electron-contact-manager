@@ -4,7 +4,8 @@ import { Container, Image, Text } from './styles'
 
 import { AES, enc as ENCODING } from 'crypto-ts'
 import { readFile } from '../../utils/file'
-import Modal from '../Modal'
+import PasswordModal from '../Modal/Password'
+import Panel from '../Panel'
 
 enum FILE_STATUS {
   LOADING = 'LOADING',
@@ -83,7 +84,7 @@ const Greetings: React.FC = () => {
       {fileStatus !== FILE_STATUS.LOADING &&
         fileStatus !== FILE_STATUS.CORRUPTED ? (
           <>
-            <Modal
+            <PasswordModal
               open={modalOpened}
               onClose={(password) => handlePassword(password)}
               description={
@@ -92,7 +93,7 @@ const Greetings: React.FC = () => {
                   : 'Please enter the password for \nyour new contact file'
               }
             />
-            {decryptedJson !== undefined && <div>asdf</div>}
+            {decryptedJson !== undefined && <Panel data={decryptedJson} />}
           </>
         ) : (
           <Image
