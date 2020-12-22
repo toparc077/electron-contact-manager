@@ -13,13 +13,17 @@ import {
   TextArea,
   ErrorMessage
 } from './styles'
-
+import IContact from '../../../type'
 interface IFormModal {
   open: boolean,
-  onClose: () => void
+  contact?: IContact;
+  onClose: () => void;
+  onSave: (
+    data: IContact
+  ) => void;
 }
 
-const FormModal: FC<IFormModal> = ({ open, onClose }) => {
+const FormModal: FC<IFormModal> = ({ open, contact, onClose, onSave }) => {
   const validationSchema = yup.object().shape({
     name: yup.string().required('Name is a required field'),
     email: yup.string().required('Email is a required field').email('Email has not the valid format'),
@@ -28,7 +32,7 @@ const FormModal: FC<IFormModal> = ({ open, onClose }) => {
   })
   const { handleSubmit, register, errors } = useForm({ validationSchema })
   const onSubmit = (data: any) => {
-    onClose()
+    onSave(data)
   }
   const handleClose = () => {
     onClose()
@@ -46,6 +50,7 @@ const FormModal: FC<IFormModal> = ({ open, onClose }) => {
               placeholder="Name"
               name="name"
               ref={register}
+              defaultValue={contact?.name || ''}
             />
             <ErrorMessage open={errors.name}>
               {errors.name?.message || ''}
@@ -55,8 +60,9 @@ const FormModal: FC<IFormModal> = ({ open, onClose }) => {
               placeholder="Email"
               name="email"
               ref={register}
+              defaultValue={contact?.email || ''}
             />
-            <ErrorMessage open={errors.name}>
+            <ErrorMessage open={errors.email}>
               {errors.email?.message || ''}
             </ErrorMessage>
             <TextInput
@@ -64,16 +70,18 @@ const FormModal: FC<IFormModal> = ({ open, onClose }) => {
               name="phone"
               placeholder="Phone number"
               ref={register}
+              defaultValue={contact?.phone || ''}
             />
-            <ErrorMessage open={errors.name}>
+            <ErrorMessage open={errors.phone}>
               {errors.phone?.message || ''}
             </ErrorMessage>
             <TextArea
               placeholder="Address"
               name="address"
               ref={register}
+              defaultValue={contact?.address || ''}
             />
-            <ErrorMessage open={errors.name}>
+            <ErrorMessage open={errors.address}>
               {errors.address?.message || ''}
             </ErrorMessage>
           </ModalContent>

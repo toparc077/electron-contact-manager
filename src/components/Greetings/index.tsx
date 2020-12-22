@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { Container, Image, Text } from './styles'
 
 import { AES, enc as ENCODING } from 'crypto-ts'
-import { readFile } from '../../utils/file'
+import { readFile, saveFile } from '../../utils/file'
 import PasswordModal from '../Modal/Password'
 import Panel from '../Panel'
+import IContact from '../../type'
 
 enum FILE_STATUS {
   LOADING = 'LOADING',
@@ -20,15 +21,15 @@ enum FILE_STATUS {
 const Greetings: React.FC = () => {
   const [fileStatus, setFileStatus] = useState(FILE_STATUS.LOADING)
   const [encryptedData, setEncryptedData] = useState('')
-  const [decryptedJson, setDecryptedJson] = useState(undefined)
+  const [decryptedJson, setDecryptedJson] = useState({})
   const [modalOpened, setModalOpened] = useState(true)
-  const [key, setKey] = useState('')
+  const [masterKey, setMasterKey] = useState('')
   const checkFileCorruption = (prefix: string) => {
     return prefix === 'RADIX'
   }
 
   if (fileStatus === FILE_STATUS.LOADING) {
-    readFile('/Volumes/Work/CryptoData/1.cry', (status, res) => {
+    readFile(process.env.REACT_APP_FILE_PATH || '', (status, res) => {
       if (status && res) {
         const prefix = res?.substring(0, 5)
         if (checkFileCorruption(prefix)) {
@@ -44,8 +45,9 @@ const Greetings: React.FC = () => {
   }
 
   const handlePassword = (password: string) => {
+    setMasterKey(password)
+
     if (fileStatus === FILE_STATUS.NOT_EXIST || fileStatus === FILE_STATUS.CORRUPTED) {
-      setKey(password)
       setFileStatus(FILE_STATUS.CREATED)
       setModalOpened(false)
       return
@@ -63,7 +65,6 @@ const Greetings: React.FC = () => {
     // setDecryptedJson(JSON.parse(decryptedMessage))
     const data = JSON.parse(decryptedMessage || '{}')
     if (data) {
-      console.log(data)
       setDecryptedJson(data)
       setFileStatus(FILE_STATUS.DECRYPTED)
     } else {
@@ -72,8 +73,13 @@ const Greetings: React.FC = () => {
     setModalOpened(false)
   }
 
+  const handleSave = (contact: IContact, activeKey: string) => {
+    const updatedJson = { ...(decryptedJson || {}), [activeKey]: contact }
+    const encryptedData = `RADIX${AES.encrypt(JSON.stringify(updatedJson), masterKey).toString()}`
+    saveFile(encryptedData, process.env.REACT_APP_FILE_PATH || '')
+    setDecryptedJson(updatedJson)
+  }
   useEffect(() => {
-    console.log(fileStatus)
     if (fileStatus === FILE_STATUS.CORRUPTED || fileStatus === FILE_STATUS.NOT_EXIST) {
       setModalOpened(true)
     }
@@ -85,6 +91,7 @@ const Greetings: React.FC = () => {
         fileStatus !== FILE_STATUS.CORRUPTED ? (
           <>
             <PasswordModal
+              key={masterKey}
               open={modalOpened}
               onClose={(password) => handlePassword(password)}
               description={
@@ -93,7 +100,7 @@ const Greetings: React.FC = () => {
                   : 'Please enter the password for \nyour new contact file'
               }
             />
-            {decryptedJson !== undefined && <Panel data={decryptedJson} />}
+            {<Panel data={decryptedJson} onSave={(contact, activeKey) => handleSave(contact, activeKey)}/>}
           </>
         ) : (
           <Image

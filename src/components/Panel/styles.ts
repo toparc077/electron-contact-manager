@@ -15,6 +15,7 @@ export const PanelContainer = styled.div`
   align-items: center;
   background: rgba(80, 80, 80, 0.39);
   border-radius: 6px;
+  z-index: 10;
 `
 
 export const Sidebar = styled.ul`
@@ -26,6 +27,7 @@ export const Sidebar = styled.ul`
 `
 
 export const PanelMain = styled.div`
+  position: relative;
   width: 400px;
   height: 400px;
   display: flex;
@@ -56,9 +58,12 @@ export const ContentItem = styled.div`
   display: block;
   font-size: 16px;
   line-height: 24px;
+  white-space: pre-line;
 `
 
 export const PanelActions = styled.section`
+  position: absolute;
+  bottom: 0;
   width: 400px;
   height: 60px;
   display: flex;

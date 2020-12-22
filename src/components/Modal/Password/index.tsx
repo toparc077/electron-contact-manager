@@ -20,7 +20,6 @@ interface IPasswordModalProps {
 const PasswordModal: FC<IPasswordModalProps> = ({ description, open, onClose }) => {
   const [password, setPassword] = useState('')
   const handleOk = () => {
-    console.log(password)
     onClose(password)
   }
   const handleClose = () => {

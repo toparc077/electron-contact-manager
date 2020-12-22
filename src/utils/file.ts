@@ -10,7 +10,14 @@ export const readFile = (
     } else {
       // eslint-disable-next-line standard/no-callback-literal
       callback(true, data)
-      console.log(data)
     }
   })
+}
+
+export const saveFile = (
+  data: string,
+  url: string
+  // callback: (status: boolean, res: string | undefined) => void
+): Promise<string> => {
+  return fs.writeFileSync(url, data, { encoding: 'utf8', flag: 'w' })
 }

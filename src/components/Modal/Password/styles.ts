@@ -18,6 +18,7 @@ export const ModalMask = styled.div`
   transition: all 0.3s;
   opacity: 1;
   pointer-events: initial;
+  z-index: 20;
 
   ${(props: IModalProps) =>
     !props.open &&
@@ -35,6 +36,7 @@ export const ModalContainer = styled.div`
   border-radius: 6px;
   transition: all 0.3s;
   transform: translateY(0);
+  z-index: 20;
 
   ${(props: IModalProps) =>
     !props.open &&
